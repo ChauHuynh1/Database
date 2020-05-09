@@ -1,136 +1,323 @@
 USE ABC_Hire_Firm;
 
--- INSERT INTO TRANSACTION TABLE
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (247845, 9876, '1964-09-03');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (252346, 3530, '1965-10-07');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (234346, 3567, '1966-08-09');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (144678, 5689, '1967-09-03');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (632657, 0123, '1968-09-05');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (245324, 2345, '1969-09-03');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (235234, 9012, '1970-10-15');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (215853, 0921, '1971-07-08');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (775234, 3210, '1971-07-06');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (256678, 4567, '1972-10-12');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (564325, 7654, '1973-09-01');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (346743, 5432, '1974-01-02');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (532578, 1209, '1975-08-10');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (864335, 0823, '1977-09-04');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (962656, 3486, '1978-05-03');
-INSERT INTO Transaction (Transcode, Equipment, Transdate)   VALUES (355327, 6789, '1979-10-03');
-
--- INSERT INTO STOCK TABLE
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(9876, 247845, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(3530, 252346, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(3567, 234346, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(5689, 144678, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(0123, 632657, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(2345, 245324, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(9012, 235234, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(0921, 215853, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(3210, 775234, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(4567, 256678, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(7654, 564325, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(5432, 346743, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(1209, 532578, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(0823, 864335, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(3486, 962656, 10000);
-INSERT INTO Stock (Equipment, Transaction, Available_quantity) VALUES(6789, 355327, 10000);
-
--- INSERT INTO EQUIPMENT TABLE
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (9876, 1234, 'Garden Fork'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (6789, 1234, 'Lawn Mower'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (7654, 3456, 'Harmer'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (4567, 3456, 'Hand Saw'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (5432, 5678, 'Cherry Picker'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (2345, 5678, 'Scissor Lifts'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (3210, 7891, 'Brush'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (0123, 7891, 'Paint'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (9012, 1011, 'Air Compressor'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (1209, 1011, 'Air Ratchet'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (0921, 1112, 'Cordless Drill'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (0823, 1112, 'Ax'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (3486, 1213, 'Regal '); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (5689, 1213, 'Thermo Pride'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (3567, 1314, 'CD'); 
-INSERT INTO Equipment (Ecode, Category, Ename)  VALUES (3530, 1314, 'Book'); 
-
--- INSERT INTO CATEGORY TABLE
-INSERT INTO Category (Code, Name) VALUES (1234, 'Gardening Equipment');
-INSERT INTO Category (Code, Name) VALUES (3456, 'Building Equipment');
-INSERT INTO Category (Code, Name) VALUES (5678, 'Access Equipment');
-INSERT INTO Category (Code, Name) VALUES (7891, 'Decorating Equipment');
-INSERT INTO Category (Code, Name) VALUES (1011, 'Car Maintenance');
-INSERT INTO Category (Code, Name) VALUES (1112, 'Power Tools');
-INSERT INTO Category (Code, Name) VALUES (1213, 'Heating and Lighting');
-INSERT INTO Category (Code, Name) VALUES (1314, 'Miscellaneous');
-
--- INSERT INTO SUPPLY TABLE
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (12, 3530, 2);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (23, 3567, 12.3);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (12, 5689, 14.1);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (23, 3486, 23.18);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (34, 0823, 29.34);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (34, 0921, 3.99);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (78, 1209, 3.78);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (09, 9012, 28.9);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (90, 0123, 45.6);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (78, 3210, 35.78);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (90, 2345, 1.6);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (09, 5432, 2.9);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (34, 4567, 2.1);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (12, 7654, 2.1);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (34, 6789, 23.4);
-INSERT INTO Supply (Supplier, Equipment, Price) VALUES (78, 9876, 99.7);
-
--- INSERT INTO SUPPLIER TABLE
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (12, 'JK Store', '42 Duong Quang Ham');
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (23, 'Alex Store', '148 Ton Dan');
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (34, 'Bryan Store', '496 Nguyen Dinh Chieu');
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (78, 'Bob Store', '98 Duong Quang Ham');
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (90, 'Helen Equipment Store', '97 Duong Quang Ham');
-INSERT INTO Supplier (Supcode, Name, Address) VALUES (09, 'Twin Brother Store', '45 Le Duc Tho');
-
--- INSERT INTO BRAND TABLE
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (1, 'Hello Eddy');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (2, 'Bonjour');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (3, 'Tan Hung');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (4, 'Viet Phat');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (5, 'Vietnamese Goods');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (6, 'I love Vietnam');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (7, 'My lovely country');
-INSERT INTO Brand (Brand_code, Brand_name) VALUES (8, 'Gorgeous Vietnam');
-
--- INSERT INTO OBTAIN TABLE
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (1, 12, 23.87);
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (2, 23, 2.8);
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (3, 34, 3.7);
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (4, 90, 8.9);
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (5, 09, 2.7);
-INSERT INTO Obtain (Brand, Supplier, Price) VALUES (6, 78, 85.9);
-
--- INSERT INTO HOUR_SUPPORT TABLE
+-- Insert into Brand table
+INSERT Brand 
+VALUE ('SP001', 'Supreme');
+INSERT Brand 
+VALUE ('LV001', 'Loui Vuitton');
+INSERT Brand 
+VALUE ('GC001', 'Gucci'); 
+INSERT Brand 
+VALUE ('PD001', 'Prada');
+INSERT Brand 
+VALUE ('VS001', 'Versal');
+INSERT Brand 
+VALUE ('NK001', 'Nike');
+INSERT Brand 
+VALUE ('AD001', 'Adidas');
+INSERT Brand 
+VALUE ('RB001', 'Reebok');
+INSERT Brand 
+VALUE ('HM001', 'Hermes');
+INSERT Brand 
+VALUE ('OW001', 'Off-White');
 
 
--- INSERT INTO SOLUTION TABLE
+-- Insert into Supplier table
+INSERT Supplier
+VALUE ('WM001', 'SP001', 'Walmart', '12 Philly');
+INSERT Supplier
+VALUE ('AZ001', 'LV001', 'Amazon', '344 Saint Paddy');
+INSERT Supplier
+VALUE ('CC001', 'GC001', 'Costco', '56 North Pole');
+INSERT Supplier
+VALUE ('SG001', 'NK001', 'Schwarz Group', '23 Munich');
+INSERT Supplier
+VALUE ('KG001', 'AD001', 'Kroger', '1444 Stockholm');
+INSERT Supplier
+VALUE ('WA001', 'RB001', 'Walgreens Boots Alliance', '33 Gotham');
+INSERT Supplier
+VALUE ('HD001', 'HM001', 'Home Depot', '99 Buenos Aires'); 
+INSERT Supplier
+VALUE ('AD001', 'VS001', 'Aldi', '89 Schwartman');
+INSERT Supplier
+VALUE ('CF001', 'PD001', 'Carrefour', '9999 St.Patrick');
+INSERT Supplier
+VALUE ('JD001', 'OW001', 'JD.Com', '666 Po The Bear');
 
--- INSERT INTO EQUIPMENT_REPLACEMENT TABLE
+-- Insert into Equipment table
+INSERT INTO Equipment
+VALUE ('SHOSP', 'Shovel', 'SP001', 'Gardening Equipment', 25, 75, 2.5, 3, 20);
+INSERT INTO Equipment
+VALUE ('LBWLV', 'Leaf Blower', 'LV001', 'Gardening Equipment', 30, 70, 2, 2.5, 20);
+INSERT INTO Equipment
+VALUE ('LAMGC', 'Lawn Mower','GC001', 'Gardening Equipment', 25, 75, 1.5, 2.5, 20);
 
--- INSERT INTO REFUND TABLE
+INSERT INTO Equipment
+VALUE ('CRBPD', 'Crow Bar','PD001', 'Building Equipment', 45, 55, 3, 3.5, 30);
+INSERT INTO Equipment
+VALUE ('HAMVS', 'Hammer','VS001', 'Building Equipment', 10, 90, 4, 5, 30);
+INSERT INTO Equipment
+VALUE ('COMNK', 'Concrete Mixer','NK001', 'Building Equipment', 47, 13, 3.5, 4, 30);
 
--- INSERT INTO CUSTOMER TABLE
+INSERT INTO Equipment
+VALUE ('TRSNK', 'Tracked Scissor lifts','NK001', 'Access Equipment', 90, 10, 4, 4.5, 40);
+INSERT INTO Equipment
+VALUE ('FOKAD', 'Forklifts','AD001', 'Access Equipment', 19, 81, 4, 4.5, 40);
+INSERT INTO Equipment
+VALUE ('VEMRB', 'Vertical masts','RB001', 'Access Equipment', 56, 19, 5, 5.5, 40);
 
--- INSERT INTO PRIVATE_CUSTOMER TABLE
+INSERT INTO Equipment
+VALUE ('ROLSP', 'Rope Lights','SP001', 'Decorating Equipment', 56, 19, 1, 1.5, 5);
+INSERT INTO Equipment
+VALUE ('HERVS', 'Headlock Rollers','VS001', 'Decorating Equipment', 56, 19, 1, 1.5, 5);
+INSERT INTO Equipment
+VALUE ('PCGGC', 'Powered Culking Guns','GC001', 'Decorating Equipment', 56, 19, 2, 2.5, 5);
 
--- INSERT INTO BUSSINESS_CUSTOMER TABLE
+INSERT INTO Equipment
+VALUE ( 'OILGC','Oild drains','GC001','Car Maintenance', 50 , 2 , 2 , 2.5 , 10 );
+INSERT INTO Equipment
+VALUE ('AIRLV','Air compressors', 'LV001','Car Maintenance', 0, 92, 2, 2.5, 10);
+INSERT INTO Equipment
+VALUE ('FLEOW','Flex', 'OW001','Car Maintenance', 18, 92, 3, 3.5, 10);
+INSERT INTO Equipment
+VALUE ('HEAHM','Head ratcher', 'HM001','Car Maintenance', 98, 10, 3.5, 4, 10);
 
--- INSERT INTO SILVER_MEMBER TABLE
+INSERT INTO EQUIPMENT
+VALUE ('POWLV','Power drill', 'LV001','Power Tools', 0, 100, 3, 4, 15);
+INSERT INTO EQUIPMENT
+VALUE ('CHAPD','Chainsaws', 'PD001','Power Tools', 98, 2, 3, 4, 15);
+INSERT INTO EQUIPMENT
+VALUE ('JIGVS','jigsaws', 'VS001','Power Tools', 90, 10, 3.5, 4.5, 15);
 
--- INSERT INTO GOLD_MEMBER TABLE
+INSERT INTO EQUIPMENT
+VALUE ('HAIOW','hair dryers', 'OW001','Heating and Lighting', 90, 10, 4, 5, 25);
+INSERT INTO EQUIPMENT
+VALUE ('FLANK','flame throwers', 'NK001','Heating and Lighting',0, 100, 4, 5, 25);
+INSERT INTO EQUIPMENT
+VALUE ('WELVS','welding torch', 'VS001','Heating and Lighting', 0, 100, 5, 6, 25);
 
--- INSERT INTO DIAMOND_MEMBER TABLE
+INSERT INTO EQUIPMENT
+VALUE ('PISAD','pistols', 'AD001','Miscellaneous', 88, 10, 5, 6, 50);
+INSERT INTO EQUIPMENT
+VALUE ('GRERB','grenades', 'RB001','Miscellaneous', 21, 10, 7, 8, 50);
+INSERT INTO EQUIPMENT
+VALUE ('DINNK','dinamites', 'NK001','Miscellaneous', 0, 100, 7, 8, 50);
 
--- INSERT INTO HIRING_EQUIPMENT TABLE
 
--- INSERT INTO INVOICE_CALCULATION TABLE
+-- Insert into Supply Table
+INSERT INTO Supply
+VALUES ('WM001', 'SHOSP', 40, '10:30');
+INSERT INTO Supply
+VALUES ('AZ001', 'LBWLV', 40, '10:30');
+INSERT INTO Supply
+VALUES ('CC001', 'LAMGC', 40, '10:30');
 
--- INSERT INTO INVOICE TABLE
+INSERT INTO Supply
+VALUES ('SG001', 'CRBPD', 60, '10:00');
+INSERT INTO Supply
+VALUES ('AD001', 'HAMVS', 60, '10:00');
+INSERT INTO Supply
+VALUES ('SG001', 'COMNK', 60, '10:00');
+
+INSERT INTO Supply
+VALUES ('SG001', 'TRSNK', 80, '10:20');
+INSERT INTO Supply
+VALUES ('KG001', 'FOKAD', 80, '10:20');
+INSERT INTO Supply
+VALUES ('WA001', 'VEMRB', 80, '10:20');
+
+INSERT INTO Supply
+VALUES ('WM001', 'ROLSP', 10, '11:30');
+INSERT INTO Supply
+VALUES ('AD001', 'HERVS', 10, '11:30');
+INSERT INTO Supply
+VALUES ('CC001', 'PCGGC', 10, '11:30');
+
+INSERT INTO Supply
+VALUES ('CC001', 'OILGC', 20, '11:00');
+INSERT INTO Supply
+VALUES ('AZ001', 'AIRLV', 20, '11:00');
+INSERT INTO Supply
+VALUES ('JD001', 'FLEOW', 20, '11:00');
+
+INSERT INTO Supply
+VALUES ('AZ001', 'POWLV', 30, '12:00');
+INSERT INTO Supply
+VALUES ('SG001', 'CHAPD', 30, '12:00');
+INSERT INTO Supply
+VALUES ('AD001', 'JIGVS', 50, '12:30');
+
+INSERT INTO Supply
+VALUES ('JD001', 'HAIOW', 50, '12:30');
+INSERT INTO Supply
+VALUES ('SG001', 'FLANK', 50, '12:30');
+INSERT INTO Supply
+VALUES ('AD001', 'WELVS', 50, '12:30');
+
+INSERT INTO Supply
+VALUES ('KG001', 'PISAD', 100, '09:30');
+INSERT INTO Supply
+VALUES ('WA001', 'GRERB', 100, '09:30');
+INSERT INTO Supply
+VALUES ('SG001', 'DINNK', 100, '09:30');
+
+-- Insert into Customer Table
+INSERT INTO Customer
+VALUE ('PR001', 'Julian Giraud', '0123456799', '18 Anh Sang');
+INSERT INTO Customer
+VALUE ('PR002', 'Billie Mo', '0554441234', '99 Brooklyn');
+INSERT INTO Customer
+VALUE ('BS001', 'Francois Hardy', '0997778881', '23 Bordeaux');
+INSERT INTO Customer
+VALUE ('BG001', 'Camille De Lamour', '0445554321', '10 Notre Dame');
+INSERT INTO Customer
+VALUE ('BD001', 'Camila Cabello', '5556661234', '123 Las Ninas');
+INSERT INTO Customer
+VALUE ('PR003', 'Tuyet Ngan', '9876543210', '19 Nguyen Van Luong');
+INSERT INTO Customer
+VALUE ('BS002', 'Khai Nguyen', '3155561234', '1234 Pasteur');
+INSERT INTO Customer
+VALUE ('BG002', 'Hoang Ha', '0986661234', '23 Nguyen Van Troi');
+INSERT INTO Customer
+VALUE ('BD002', 'Hoang Hai', '0986669834', '232 Nguyen Van Linh');
+INSERT INTO Customer
+VALUE ('PR004', 'Hoang', '0216661234', '32 Nguyen Van Troi');
+INSERT INTO Customer
+VALUE ('PR005', 'Hoang Khoi', '0216897234', '321 Nguyen Van Nguyen');
+
+-- Insert into Bussiness Customer Table
+INSERT INTO Business_customer
+VALUE ('BS001', 'Silver');
+INSERT INTO Business_customer
+VALUE ('BG001', 'Gold');
+INSERT INTO Business_customer
+VALUE ('BD001', 'Diamond');
+INSERT INTO Business_customer
+VALUE ('BS002', 'Silver');
+INSERT INTO Business_customer
+VALUE ('BG002', 'Gold');
+INSERT INTO Business_customer
+VALUE ('BD002', 'Diamond');
+
+-- Insert into Private Customer Table
+INSERT INTO Private_customer
+VALUE ('PR001');
+INSERT INTO Private_customer
+VALUE ('PR002');
+INSERT INTO Private_customer
+VALUE ('PR003');
+INSERT INTO Private_customer
+VALUE ('PR004');
+INSERT INTO Private_customer
+VALUE ('PR005');
+
+-- Insert into Hire_Bill Table
+INSERT INTO Hire_Bill
+VALUES ('PR001','H0001', 80.9, '2020-02-02','2020-02-28');
+INSERT INTO Hire_Bill
+VALUES ('BD001','H0002', 30, '2020-02-02','2020-02-15');
+INSERT INTO Hire_Bill
+VALUES ('BD001','H0003', 175,'2020-02-04','2020-02-18');
+INSERT INTO Hire_Bill
+VALUES ('BS001','H0004', 60, '2020-04-04','2020-04-18');
+INSERT INTO Hire_Bill
+VALUES ('PR003','H0005', 75,'2020-04-05','2020-04-18');
+INSERT INTO Hire_Bill
+VALUES ('BG001','H0006', 50,'2020-04-07','2020-04-15' );
+INSERT INTO Hire_Bill
+VALUES ('PR002','H0007', 15,'2020-04-10','2020-04-17');
+INSERT INTO Hire_Bill
+VALUES ('BS001','H0008', 160,'2020-03-11','2020-03-31' );
+
+-- Insert into Hiring_update Table
+INSERT INTO Hiring_update
+VALUES ('H0001','FOKAD',2);
+Insert into Hiring_update
+VALUE ('H0002','ROLSP',2);
+Insert into Hiring_update
+VALUE ('H0002','OILGC',2);
+Insert into Hiring_update
+VALUE ('H0003','HAIOW',3);
+Insert into Hiring_update
+VALUE ('H0003','DINNK',2);
+Insert into Hiring_update
+VALUE ('H0004','POWLV',3);
+Insert into Hiring_update
+VALUE ('H0004','CHAPD',1);
+Insert into Hiring_update
+VALUE ('H0005','WELVS',3);
+Insert into Hiring_update
+VALUE ('H0008','FOKAD',4);
+
+-- Insert into Invoice Table
+INSERT INTO Invoice
+Value ('PR001','IN001','2020-02-29','0%', 0 ,'10%', 100 );
+INSERT INTO Invoice
+Value ('BD001','IN002','2020-02-16','10%', 10,'10%', 95);
+INSERT INTO Invoice
+Value ('BD002','IN003','2020-02-19','15%', 35,'10%', 295);
+Insert into Invoice
+Value ('BS002','IN004','2020-04-19','0%',0 ,'10%', 550);
+INSERT INTO Invoice
+VALUE ('PR003', 'IN005', '2020-04-18', '0%', 0, '0%', 197); 
+INSERT INTO Invoice
+VALUE ('BG001', 'IN006', '2020-04-15', '0%', 0, '0%', 59);
+INSERT INTO Invoice
+VALUE ('PR002', 'IN007', '2020-04-17', '0%', 0, '0%', 25);
+INSERT INTO Invoice
+VALUE ('BS001', 'IN008', '2020-03-31', '0%', 0, '0%', 332);
+
+-- Insert into Invoice_update Table
+Insert into Invoice_update
+VALUE ('IN001','FOKAD', 2, 8);
+Insert into Invoice_Update
+VALUE ('IN002','VEMRB', 2, 10);
+Insert into Invoice_Update
+VALUE ('IN002','AIRLV', 2, 4);
+Insert into Invoice_update
+VALUE ('IN003','TRSNK', 2, 8);
+Insert into Invoice_update
+VALUE ('IN003','VEMRB', 4, 20);
+Insert into Invoice_update
+VALUE ('IN004','PISAD', 5, 25);
+Insert into Invoice_update
+VALUE ('IN004','DINNK', 4, 28);
+INSERT INTO Invoice_update
+VALUE ('IN005', 'WELVS', 3, 15); 
+INSERT INTO Invoice_update
+VALUE ('IN006', 'DINNK', 1, 7);
+INSERT INTO Invoice_update
+VALUE ('IN007', 'PCGGC', 3, 6);
+INSERT INTO Invoice_update
+VALUE ('IN008', 'FOKAD', 4, 16);
+
+
+-- Insert into Discount_Detail Table
+INSERT Into Discount_detail
+Value ('DI001','BG001','IN002','25%',25);
+INSERT Into Discount_detail
+Value ('DI002','BD001','IN003','40%',75);
+INSERT Into Discount_detail        
+Value ('DI003','BS002','IN004','10%',50);
+INSERT Into Discount_detail        
+Value ('DI004','BS001','IN008','10%',52);
+INSERT Into Discount_detail        
+Value ('DI005','BG001','IN006','25%',75);
+
+-- Insert into Complaint Table
+INSERT INTO Complaint
+Value ('BD001','CM001', 'ROLSP','In stock','Replace', '2020-02-10','Yes');
+
+INSERT INTO Complaint
+Value ('BD001','CM002', 'OILGC','Out of stock','Refund', '2020-02-12','Yes');
+
+INSERT INTO Complaint
+Value ('PR001','CM003', 'FOKAD','Out of stock','Refund', '2020-02-04','No');
+
+INSERT INTO Complaint
+Value ('BS001','CM004', 'CHAPD','In stock','Replace', '2020-04-05','Yes');
+
+INSERT INTO Complaint
+Value ('PR003','CM005', 'WELVS','In stock','Replace', '2020-04-08','No');
+

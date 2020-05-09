@@ -3,245 +3,205 @@ USE ABC_Hire_Firm;
 
 SET FOREIGN_KEY_CHECKS=0;
 
-CREATE TABLE Transaction (
-       Transcode INT,
-       Equipment INT, -- code of equipment
-       Transdate DATE,
-       CONSTRAINT pk_Transaction
-       PRIMARY KEY (Transcode), 
-       CONSTRAINT fk_Transaction_Equipment
-       FOREIGN KEY (Equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE
-                         );
-
-CREATE TABLE Stock (
-       Equipment INT, -- code of equipment
-       Transaction INT, -- code of transaction
-       Available_quantity BIGINT,
-       CONSTRAINT pk_Stock
-       PRIMARY KEY (Equipment),
-       CONSTRAINT fk_Stock_Equipment
-       FOREIGN KEY (Equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Stock_Transaction
-       FOREIGN KEY (Transaction)
-       REFERENCES Transaction(Transcode) ON DELETE CASCADE ON UPDATE CASCADE
-                   );
-                   
-CREATE TABLE Equipment (
-       Ecode INT,
-       Category INT,  -- code of category
-       Ename VARCHAR(50),
-       CONSTRAINT pk_Equipment
-       PRIMARY KEY (Ecode, Ename),
-       CONSTRAINT fk_Equipment_Catergory
-       FOREIGN KEY (Category)
-       REFERENCES Catefory(code)
-                       );
-                       
-CREATE TABLE Category (
-       Code INT,
-       Name VARCHAR(50),
-       CONSTRAINT pk_Category
-       PRIMARY KEY (Code, Name) 
-                       );
-
-CREATE TABLE Supply (
-       Supplier INT, -- code of supplier 
-       Equipment INT, -- code of equipment
-       Price FLOAT NOT NULL,
-       CONSTRAINT fk_Supply_Supplier
-       FOREIGN KEY (Supplier)
-       REFERENCES Supplier(Supcode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Supply_Equipment
-       FOREIGN KEY (Equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CHECK (Price <> '')
-                    );
-
-CREATE TABLE Supplier (
-       Supcode INT,
-       Name VARCHAR(50),
-       Address VARCHAR(50),
-       CONSTRAINT pk_Supplier
-       PRIMARY KEY (Supcode, Name)
-                      );
-
+-- Create table Brand (Brand_code, name)
 CREATE TABLE Brand (
-       Brand_code INT,
-       Brand_name VARCHAR(50) NOT NULL,
+       Brand_code VARCHAR(5),
+       Name VARCHAR(50),
        CONSTRAINT pk_Brand
        PRIMARY KEY (Brand_code),
-       CHECK (Brand_name <> '')
+       CHECK (Brand_code REGEXP '^[A-Z]{2}[[:digit:]]{3}$') 
                    );
-                   
-CREATE TABLE Obtain (
-       Brand INT, -- code of Brand
-       Supplier INT, -- code of supplier
-       Price FLOAT NOT NULL,
-       CONSTRAINT fk_Obtain_Brand
-       FOREIGN KEY (Brand)
-       REFERENCES Brand(Brand_code) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Obtain_Supplier
-       FOREIGN KEY (Supplier)
-       REFERENCES Supplier(Supcode) ON DELETE CASCADE ON UPDATE CASCADE
-                    );
-                    
-CREATE TABLE Hour_support (
-       Fail_equipment INT,
-       Solucode INT,
-       Solution VARCHAR(200),
-       CONSTRAINT pk_Hour_support
-       PRIMARY KEY (Solucode),
-       CONSTRAINT fk_Hour_support_Equipment
-       FOREIGN KEY (Fail_equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE
-                          );
 
-CREATE TABLE Solution (
-       Solution INT, -- Solution code from hour support
-       Solution_Date DATE NOT NULL,
-       CONSTRAINT pk_Solution
-       PRIMARY KEY (Solution),
-       CONSTRAINT fk_Solution_Hour_support
-       FOREIGN KEY (Solution)
-       REFERENCES Hour_support(Solucode) ON DELETE CASCADE ON UPDATE CASCADE
-                      );
-                      
-CREATE TABLE Equipment_replacement (
-       Solution INT, -- Solution code from Solution
-       Equipment_replacement INT, -- code of equipment
-       CONSTRAINT pk_Equipment
-       PRIMARY KEY (Solution),
-       CONSTRAINT fk_Equipment_replacement_Solution
-       FOREIGN KEY (Solution)
-       REFERENCES Solution(Solution) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Equipment_replacement_Equipment
-       FOREIGN KEY (Equipment_replacement)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE
-                                   );
 
-CREATE TABLE Refund (
-       Solution INT, -- Solution code from Solution
-       Refund_code INT,
-       Equipment INT, -- code of equipment, then the amount of money need to refund will be searched in Supply to find equipment's price
-       CONSTRAINT pk_Refund
-       PRIMARY KEY (Solution, Refund_code),
-       CONSTRAINT fk_Refund_Solution
-       FOREIGN KEY (Solution)
-       REFERENCES Solution(Solution) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Refund_Equipment
-       FOREIGN KEY (Equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE
-                          );
-
-CREATE TABLE Customer (
-       Custcode INT,
+ 
+-- Create table Supplier (Sup_code, Brand.Brand_code Brand, Name, address)
+CREATE TABLE Supplier (
+       Sup_code VARCHAR(5),
+       Brand VARCHAR(5),
        Name VARCHAR(50),
-       Type VARCHAR(10),
-       CONSTRAINT pk_Customer
-       PRIMARY KEY (Custcode)
-                      );
+       Address VARCHAR(50),
+       CONSTRAINT pk_Supply
+       PRIMARY KEY (Sup_code),
+       CONSTRAINT fk_Supplier_Brand
+       FOREIGN KEY (Brand)
+       REFERENCES Brand (Brand_code) ON DELETE CASCADE ON UPDATE CASCADE,
+		 CHECK (Sup_code REGEXP ('^[A-Z]{2}[[:digit:]]{3}$')    
+                    ));
+
+-- Create table Equipment (E_code, name, Brand.Brand_code Brand, Category, 
+--                                           In_stock, On_hire, Weekday_rate, Weekend_price, Deposit)
+CREATE TABLE Equipment (
+       E_code VARCHAR(5),
+       Name VARCHAR(50),
+       Brand VARCHAR(5),
+       Category VARCHAR(50),
+       In_stock INT NOT NULL,
+       On_hire INT NOT NULL,
+       Weekday_rate FLOAT,
+       Weekend_price FLOAT,
+       Deposit FLOAT,
+       CONSTRAINT pk_Equipment
+       PRIMARY KEY (E_code),
+       CONSTRAINT fk_Equipment_Brand
+       FOREIGN KEY (Brand)
+       REFERENCES Brand (Brand_code) ON DELETE CASCADE ON UPDATE CASCADE,
+		 CHECK (E_code REGEXP '^[A-Z]{5}$') 
+                       );
+
+
+/* Create table Supply (Supplier.Sup_code Supplier, Equipment.E_code 
+                                      Equipment, Price, Delivery_time) */
+CREATE TABLE Supply (
+       Supplier VARCHAR(5),
+       Equipment VARCHAR(5),
+       Price FLOAT,
+       Delievery_time TIME(0),
+       Primary Key (Supplier, Equipment),
+       CONSTRAINT fk_Supply_Supplier
+       FOREIGN KEY (Supplier)
+       REFERENCES Supplier (Sup_code) ON DELETE CASCADE ON UPDATE CASCADE,
+	   CONSTRAINT fk_Supply_Equipment
+	   FOREIGN KEY (Equipment)
+	   REFERENCES Equipment (E_code) ON DELETE CASCADE ON UPDATE CASCADE
+                       );
+
+
+
+-- Create table Customer (CID, Customer_Name, Phone, Address)
+
+CREATE TABLE Customer(
+         CID VARCHAR(5),
+         customer_name VARCHAR (30),
+         phone VARCHAR(11),
+         address VARCHAR (50),
+         CONSTRAINT pk_Customer
+         PRIMARY KEY (CID),
+         CHECK (CID REGEXP '^(PR|B(S|G|D))[[:digit:]]{3}$') 
+                     );
+                                            
+-- Create table Business_customer ( Customer.CID Customer, Membership)
+
+CREATE TABLE Business_customer(
+          Customer VARCHAR(5),
+          Membership VARCHAR(50),
+          CONSTRAINT pk_Bussiness_customer
+          PRIMARY KEY (Customer),
+          CONSTRAINT fk_Bussiness_Customer
+          FOREIGN KEY (Customer)
+          REFERENCES Customer (CID) ON DELETE CASCADE ON UPDATE CASCADE     
+                                                           );
+
+-- Create table Private_customer (Customer.CID Customer, Distance)
 
 CREATE TABLE Private_customer (
-       ID INT, -- Code of Customer
-       Address VARCHAR(50) NOT NULL,
-       CONSTRAINT pk_Private_customer
-       PRIMARY KEY (ID),
-       CONSTRAINT fk_Private_customer_Customer
-       FOREIGN KEY (ID)
-       REFERENCES Customer(Custcode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CHECK (Address <> '')
-                              );
-                              
-CREATE TABLE Bussiness_customer (
-       ID INT, -- Code of Customer
-       Discount INT, -- Code for discounting
-       Equipment INT, -- Code of equipment
-       CONSTRAINT pk_Bussiness_customer
-       PRIMARY KEY (ID),
-       CONSTRAINT fk_Bussiness_customer_Customer
-       FOREIGN KEY (ID)
-       REFERENCES Customer(Custcode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Bussiness_customer_Equipment
-       FOREIGN KEY (Equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE
-                                );
-                                
-CREATE TABLE Silver_member (
-       Custcode INT, -- customer code
-       Memcode INT, -- discount code
-       CONSTRAINT pk_Silver_member
-       PRIMARY KEY (Memcode, Custcode),
-       CONSTRAINT fk_Silver_member_Customer
-       FOREIGN KEY (Custcode)
-       REFERENCES Customer(Custcode) ON DELETE CASCADE ON UPDATE CASCADE
-                           );
+          Customer VARCHAR(5),
+          CONSTRAINT pk_Private_Customer
+          PRIMARY KEY (Customer),
+          CONSTRAINT fk_Private_Customer_Customer
+          FOREIGN KEY (Customer)
+          REFERENCES Customer (CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                                                         );
+                                                                         
+-- Create table Hire_Bill (Customer.CID Customer ,Hire_ID, Total_Deposit, expected_return_date, hired_date)
 
-CREATE TABLE Gold_member (
-       Custcode INT, -- customer code
-       Memcode INT, -- discount code
-       CONSTRAINT pk_Gold_member
-       PRIMARY KEY (Memcode, Custcode),
-       CONSTRAINT fk_Golde_member_Customer
-       FOREIGN KEY (Custcode)
-       REFERENCES Customer(Custcode) ON DELETE CASCADE ON UPDATE CASCADE
-                           );
+CREATE TABLE Hire_Bill (
+       Customer VARCHAR(5),
+       Hire_ID VARCHAR(5) ,
+       Total_Deposit FLOAT,
+       Hired_Date Date,
+       Expected_returned_date DATE,
+       CONSTRAINT pk_Hire_Bill
+       PRIMARY KEY (Hire_ID),
+       CONSTRAINT fk_Hire_bill_Customer
+       FOREIGN KEY (Customer)
+       REFERENCES Customer (CID) ON DELETE CASCADE ON UPDATE CASCADE,
+       CHECK (Hire_ID REGEXP ('^[A-Z]{1}[[:digit:]]{4}$'))
+                       );
 
-CREATE TABLE Diamond_member (
-       Custcode INT, -- customer code
-       Memcode INT, -- discount code
-       CONSTRAINT pk_Diamond_member
-       PRIMARY KEY (Memcode, Custcode),
-       CONSTRAINT fk_Diamond_member_Customer
-       FOREIGN KEY (Custcode)
-       REFERENCES Customer(Custcode) ON DELETE CASCADE ON UPDATE CASCADE
-                           );
+/* Create table Hiring_update (Hire_Bill.Hire_code Hire_id, 
+                                                 Equipment.E_code Equipment , Quantity) */
+                                                 
+CREATE TABLE Hiring_update (
+       Hire_ID VARCHAR(5), 
+       Equipment VARCHAR(5),
+       Quantity INT,
+       PRIMARY KEY ( Hire_ID, Equipment),
+       CONSTRAINT fk_Hiring_update_hire_bill
+       FOREIGN KEY (Hire_ID) 
+       REFERENCES Hire_Bill (Hire_ID) on DELETE CASCADE ON UPDATE CASCADE,
+        CONSTRAINT fk_Hiring_Update_Equipment
+        FOREIGN KEY (Equipment)
+        REFERENCES Equipment (E_code) ON DELETE CASCADE ON UPDATE CASCADE
+                       );
 
-CREATE TABLE Hiring_equipment (
-       Transaction INT, -- transaction code
-       Hiring_code INT,
-       Hiring_equipment INT, -- code of equipment
-       Amount INT NOT NULL,
-       Hiring_date DATE,
-       Expected_return_date DATE,
-       Return_date DATE,
-       CONSTRAINT pk_Hiring_equipment
-       PRIMARY KEY (Hiring_code, Hiring_equipment),
-       CONSTRAINT fk_Hiring_equipment_Transaction
-       FOREIGN KEY (Transaction)
-       REFERENCES Transaction(Transcode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Hiring_equipment_Equipment
-       FOREIGN KEY (Hiring_equipment)
-       REFERENCES Equipment(Ecode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CHECK (Amount <> '')
-                              );
 
-CREATE TABLE Invoice_calculation (
-       Hiring_code INT, -- code of hiring
-       Invoice_code INT, -- Code of invoice
-       Invoice_money FLOAT NOT NULL,
-       CONSTRAINT fk_Invoice_calculation_Hiring_equipment
-       FOREIGN KEY (Hiring_code)
-       REFERENCES Hiring_equipment(Hiring_code) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Invoice_calculation_Invoice
-       FOREIGN KEY (Invoice_code)
-       REFERENCES Invoice(Invoice_code) ON DELETE CASCADE ON UPDATE CASCADE
-                                 );
-                                 
+/* Create table Invoice (Customer.CID Customer, Invoice_ID,Returned_date, overdue_rate
+						,overdue_fee,VAT,Total_Hiring_Cost) */
 CREATE TABLE Invoice (
-       Transaction INT, -- code of transaction
-       Invoice_code INT,
-       Equipment INT, -- code of Hiring Equipment
-       CONSTRAINT pk_Invoice
-       PRIMARY KEY (Invoice_code),
-       CONSTRAINT fk_Invoice_Transaction
-       FOREIGN KEY (Transaction)
-       REFERENCES Transaction(Transcode) ON DELETE CASCADE ON UPDATE CASCADE,
-       CONSTRAINT fk_Invoice_Hiring_equipment
+          Customer VARCHAR(5),
+          Invoice_ID VARCHAR(5),
+          Returned_Date DATE,
+          Overdue_fee_rate VARCHAR(4),
+		  Overdue_fee FLOAT,
+		  VAT VARCHAR(4),
+          Total_Hiring_Cost FLOAT,
+          CONSTRAINT pk_Invoice 
+          PRIMARY KEY ( Invoice_ID),
+          CONSTRAINT fk_Invoice_Customer
+          FOREIGN KEY (Customer)
+          REFERENCES Customer (CID) ON DELETE CASCADE ON UPDATE CASCADE,
+          CHECK (Invoice_ID REGEXP ('^[A-Z]{2}[[:digit:]]{3}$'))
+                                                                         );
+
+/* Create table Invoice_update (Invoice.Customer Customer, Invoice.Invoice_ID Invoice, Equipment.E_code Equipment, Quantity, Cost) */
+CREATE TABLE Invoice_Update (
+          Invoice_ID VARCHAR(5),
+          Equipment VARCHAR(5),
+          Quantity INT,
+          Cost FLOAT,
+          CONSTRAINT pk_Invoice_Update 
+          PRIMARY KEY ( Invoice_ID, Equipment ),
+          CONSTRAINT fk_Invoice_Update_Equipment 
+          FOREIGN KEY (Equipment)
+          REFERENCES Equipment (E_code) ON DELETE CASCADE ON UPDATE CASCADE
+                                                                         );
+
+
+/* Create table Discount_Detail (Discount_ID, Business_customer.Customer Customer,        
+								Discount_Rate, Discount,Invoice.Invoice_ID Invoice NOT NULL) */
+CREATE TABLE Discount_Detail ( 
+          Discount_ID VARCHAR(5),
+          Customer VARCHAR(5),
+          Invoice VARCHAR(5),
+          Discount_Rate VARCHAR(4),
+          Discount Float,
+          PRIMARY KEY ( Discount_ID),
+          CONSTRAINT fk_Discount_Detail_Customer
+          FOREIGN KEY (Customer)
+          REFERENCES Business_Customer (Customer) ON DELETE CASCADE ON UPDATE CASCADE,
+          CONSTRAINT fk_Discount_Detail_Invoice
+          FOREIGN KEY (Invoice)
+          REFERENCES Invoice (Invoice_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+          CHECK (Discount_ID REGEXP ('^[A-Z]{2}[[:digit:]]{3}$'))
+			  );
+
+
+/* Create table Complaint (Customer.CID Customer, Complaint_code, date,
+                                          Equipment.E_code Equipment, status, solution) */
+CREATE TABLE Complaint(
+       Customer VARCHAR(5),
+       Complaint_code VARCHAR(5),
+       Equipment VARCHAR(5),
+       Status VARCHAR(50),
+       Solution VARCHAR(50),
+       Complaint_date DATE,
+       24_hour_support VARCHAR(3), 
+       CONSTRAINT pk_Complaint
+       PRIMARY KEY (Customer, Complaint_code),
+       CONSTRAINT fk_Complaint_Equipment
        FOREIGN KEY (Equipment)
-       REFERENCES Hiring_equipment(Hiring_equipment) ON DELETE CASCADE ON UPDATE CASCADE
-					 );
+       REFERENCES Equipment (E_code) ON DELETE CASCADE ON UPDATE CASCADE 
+                    );
 
 COMMIT;
 SET FOREIGN_KEY_CHECKS=1;
