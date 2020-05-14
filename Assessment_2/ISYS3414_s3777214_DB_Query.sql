@@ -1,22 +1,26 @@
 USE ABC_Hire_Firm;
 
 -- 1. For given particular equipment, show current stock and current items on hire and the name of its category.
-SELECT E.E_code, E.name AS Equipment, E.In_stock, E.On_hire, Category
+SELECT E.E_code, E.name AS Equipment, E.In_stock, E.On_hire, E.Category
 FROM Equipment E; 
 
 -- 2. For a particular business customer, show the current items on hire with expected return dates plus 
 -- any previous complaints that made by that customer which involved a replacement of equipment or a full refund.
-Select Distinct C.cid , C.customer_name, HU.Equipment, H.Expected_returned_date,  CO.Complaint_code , CO.Solution
-FROM Customer C , Business_Customer BC , Hire_Bill H ,Complaint CO, Hiring_Update HU
-WHERE C.cid = BC.Customer
-AND C.cid = H.Customer
-AND H.Hire_ID = HU.Hire_ID
-AND C.cid = CO.customer ;
+SELECT B1.Customer, C1.Customer_name, H1.Equipment AS `CURRENT Equipment on Hire`, H.Expected_returned_date, NULL AS `PAST Complaint`, NULL AS `Faulty Equipment`, NULL AS Solution 
+FROM Customer C1, hire_bill H
+right outer join business_customer B1 ON H.Customer = B1.Customer AND H.`Return Status` = 'Current'
+left outer join Hiring_Detail H1 ON H.Hire_ID = H1.Hire_ID
+WHERE C1.CID = B1.Customer
+UNION 
+SELECT distinct B.Customer, C1.Customer_name, NULL, NULL, C.Complaint_code, C.Equipment, C.Solution 
+FROM complaint C, Customer C1, business_customer B
+WHERE B.Customer = C.Customer AND C1.CID = B.Customer;
 
 -- 3. A list of names and addresses of all suppliers along with the total number of equipment from all categories they currently supply.
-SELECT Sup.Sup_code, Sup.name AS Supplier, Sup.Address, COUNT(S.Equipment)
-FROM Supplier Sup, Supply S 
+SELECT Sup.Sup_code, Sup.name AS Supplier, Sup.Address , SUM(E.In_stock + E.On_hire)
+FROM Supplier Sup, Supply S , Equipment E
 WHERE Sup.Sup_code = S.Supplier
+AND E.E_code = S.equipment
 GROUP BY Sup.Sup_code;
 
 -- 4. For a given category, the total number of equipment (i.e. items) under that category available in stock 
@@ -27,9 +31,10 @@ FROM Equipment E
 GROUP BY E.Category;
 
 -- 5. Summary of income from hiring equipment for last month. The result should be sub-divided according to equipment categories.
-Select E.category , Sum(IU.cost)
-FROM Equipment E , Invoice_Update IU , Invoice I
-WHERE E.E_code = IU.Equipment
-AND I.Invoice_ID = IU.Invoice_ID
-AND I.returned_date between '2020-04-01' and '2020-04-30'
+
+Select E.category , Sum(ID.cost)
+FROM Equipment E , Invoice_Detail ID , Invoice I
+WHERE E.E_code = ID.Equipment
+AND I.Invoice_ID = ID.Invoice_ID
+AND MONTH(I.returned_date) = MONTH(current_date() - interval 1 month)
 GROUP BY E.category;

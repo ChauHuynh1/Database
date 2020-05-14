@@ -1,3 +1,4 @@
+drop DATABASE if EXISTS ABC_Hire_Firm;
 CREATE DATABASE ABC_Hire_Firm;
 USE ABC_Hire_Firm;
 
@@ -29,7 +30,7 @@ CREATE TABLE Supplier (
                     ));
 
 -- Create table Equipment (E_code, name, Brand.Brand_code Brand, Category, 
---                                           In_stock, On_hire, Weekday_rate, Weekend_price, Deposit)
+--                                           In_stock, On_hire, Weekday_rate, Weekend_rate, Deposit)
 CREATE TABLE Equipment (
        E_code VARCHAR(5),
        Name VARCHAR(50),
@@ -37,8 +38,8 @@ CREATE TABLE Equipment (
        Category VARCHAR(50),
        In_stock INT NOT NULL,
        On_hire INT NOT NULL,
-       Weekday_rate FLOAT,
-       Weekend_price FLOAT,
+       `Weekday_rate (%)` FLOAT,
+       `Weekend_rate (%)` FLOAT,
        Deposit FLOAT,
        CONSTRAINT pk_Equipment
        PRIMARY KEY (E_code),
@@ -110,6 +111,7 @@ CREATE TABLE Hire_Bill (
        Total_Deposit FLOAT,
        Hired_Date Date,
        Expected_returned_date DATE,
+       `Return Status` Varchar(10),
        CONSTRAINT pk_Hire_Bill
        PRIMARY KEY (Hire_ID),
        CONSTRAINT fk_Hire_bill_Customer
@@ -121,7 +123,7 @@ CREATE TABLE Hire_Bill (
 /* Create table Hiring_update (Hire_Bill.Hire_code Hire_id, 
                                                  Equipment.E_code Equipment , Quantity) */
                                                  
-CREATE TABLE Hiring_update (
+CREATE TABLE Hiring_Detail (
        Hire_ID VARCHAR(5), 
        Equipment VARCHAR(5),
        Quantity INT,
@@ -141,9 +143,7 @@ CREATE TABLE Invoice (
           Customer VARCHAR(5),
           Invoice_ID VARCHAR(5),
           Returned_Date DATE,
-          Overdue_fee_rate VARCHAR(4),
-		  Overdue_fee FLOAT,
-		  VAT VARCHAR(4),
+		    VAT VARCHAR(4),
           Total_Hiring_Cost FLOAT,
           CONSTRAINT pk_Invoice 
           PRIMARY KEY ( Invoice_ID),
@@ -153,11 +153,12 @@ CREATE TABLE Invoice (
           CHECK (Invoice_ID REGEXP ('^[A-Z]{2}[[:digit:]]{3}$'))
                                                                          );
 
-/* Create table Invoice_update (Invoice.Customer Customer, Invoice.Invoice_ID Invoice, Equipment.E_code Equipment, Quantity, Cost) */
-CREATE TABLE Invoice_Update (
+/* Create table Invoice_Detail (Invoice.Customer Customer, Invoice.Invoice_ID Invoice, Equipment.E_code Equipment, Quantity, Cost) */
+CREATE TABLE Invoice_Detail (
           Invoice_ID VARCHAR(5),
           Equipment VARCHAR(5),
           Quantity INT,
+          `Overdue_fee_rate (%)` FLOAT,
           Cost FLOAT,
           CONSTRAINT pk_Invoice_Update 
           PRIMARY KEY ( Invoice_ID, Equipment ),
@@ -174,7 +175,6 @@ CREATE TABLE Discount_Detail (
           Customer VARCHAR(5),
           Invoice VARCHAR(5),
           Discount_Rate VARCHAR(4),
-          Discount Float,
           PRIMARY KEY ( Discount_ID),
           CONSTRAINT fk_Discount_Detail_Customer
           FOREIGN KEY (Customer)
@@ -189,8 +189,9 @@ CREATE TABLE Discount_Detail (
 /* Create table Complaint (Customer.CID Customer, Complaint_code, date,
                                           Equipment.E_code Equipment, status, solution) */
 CREATE TABLE Complaint(
-       Customer VARCHAR(5),
        Complaint_code VARCHAR(5),
+       Hire_ID VARCHAR(5),
+       Customer VARCHAR(5),
        Equipment VARCHAR(5),
        Status VARCHAR(50),
        Solution VARCHAR(50),
@@ -198,6 +199,9 @@ CREATE TABLE Complaint(
        24_hour_support VARCHAR(3), 
        CONSTRAINT pk_Complaint
        PRIMARY KEY (Customer, Complaint_code),
+       CONSTRAINT fk_hire_bill
+       FOREIGN KEY (Hire_ID) 
+       REFERENCES Hire_Bill (Hire_ID) on DELETE CASCADE ON UPDATE CASCADE,
        CONSTRAINT fk_Complaint_Equipment
        FOREIGN KEY (Equipment)
        REFERENCES Equipment (E_code) ON DELETE CASCADE ON UPDATE CASCADE 
