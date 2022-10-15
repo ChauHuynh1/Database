@@ -17,3 +17,4 @@ got the highest, second, third, forth and fith highest scores. Each championship
 sponsored by a variety of sponsorship
 
 ### ERD Design:
+<img src="./ERD_Design/ER-Diagram.png" width="1024" alt="ER Diagram of Bank database design">
